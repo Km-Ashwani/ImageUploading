@@ -5,16 +5,16 @@ namespace ImageUploading.Controllers
 {
     public class ProductController : Controller
     {
-        ProductDbContext context;
+        ProductDbContext _context;
         IWebHostEnvironment env;
-        public ProductController(ProductDbContext _context, IWebHostEnvironment env)
+        public ProductController(ProductDbContext context, IWebHostEnvironment env)
         {
-            this.context = _context;
+            this._context = context;
             this.env = env;
         }
         public IActionResult Index()
         {
-            return View(context.Products.ToList());
+            return View(_context.Products.ToList());
         }
         public IActionResult AddProduct()
         {
@@ -42,8 +42,8 @@ namespace ImageUploading.Controllers
                             Price = prod.Price,
                             ImgPath = filename
                         };
-                        context.Products.Add(p);
-                        context.SaveChanges();
+                        _context.Products.Add(p);
+                        _context.SaveChanges();
                         TempData["success"] = "product added...";
                         return RedirectToAction("Index");
                     }
